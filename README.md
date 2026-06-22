@@ -29,9 +29,11 @@
 <h2 id="tools-used"> Tools Used </h2>
 <ol>
   <li> Wireshark </li>
+  <li> Networkminer </li>
   <li> Event Viewer </li>
   <li> <a href="https://gchq.github.io/CyberChef/"> CyberChef </a> </li>
   <li> <a href="https://www.virustotal.com/"> VirusTotal </li>
+  <li> <a href="https://attack.mitre.org/"> MITRE ATT&CK </a> </li>
 </ol>
 <p align="right">(<a href="#top">Back to Top</a>)</p>
 
@@ -112,10 +114,40 @@
 <img width="1397" height="402" alt="Screenshot 2026-06-21 200101" src="https://github.com/user-attachments/assets/f2cd4da8-fbb9-409e-91ef-ecf41b9c2fd2" />
 <p> According to <a href="https://attack.mitre.org/tactics/TA0005/"> MITRE ATT&CK</a>, the Tatic ID of shealth is <strong>TA0005</strong>. </p>
 <br>
-<p> <strong> What's the invoked PowerShell script used by the attacker for dumping credentials? </strong></p>
+<p> <strong> 12. What's the invoked PowerShell script used by the attacker for dumping credentials? </strong></p>
 <img width="1860" height="180" alt="Screenshot 2026-06-21 194207" src="https://github.com/user-attachments/assets/9babc6fa-4295-4946-b5d2-5c02f91f5a16" />
 <p> We looked back the checking.ps1, if the user's privilege was SYSTEM, the third script ichigo-lite.ps1 was downloaded from the attacker. We follow the HTTP stream of the ichigo-lite.ps1 in Wireshark. </p>
 <img width="998" height="320" alt="Screenshot 2026-06-21 201634" src="https://github.com/user-attachments/assets/21254f42-b34e-42b5-91e9-a7011897a2ef" />
 <p> ichigo-lite.ps1 showed nothing about credential dumping but it first downloaded 2 other scripts from the attacker. The forth payload <strong>Invoke-PowerDump.ps1</strong> caught my eyes so I followed the HTTP stream of <strong>Invoke-PowerDump.ps1</strong>. </p>
 <img width="1386" height="956" alt="Screenshot 2026-06-21 202159" src="https://github.com/user-attachments/assets/3a136169-edad-49b0-a394-1d20959ff8d5" />
-<p> And yes! We found this script was about dumping credential </p>
+<p> And yes! We found this script was about dumping credential. The windows users' NTLM hashes were encrypted and dumped with powershell. Therefore, <strong>Invoke-PowerDump.ps1</strong> was used b the attacker to dump credentials. </p>
+<br>
+<p> <strong> 13. Understanding which credentials have been compromised is essential for assessing the extent of the data breach. What's the name of the saved text file containing the dumped credentials? </strong></p>
+<p> When we scrolled down the script ichigo-lite.ps1 further, we discovered there were 2 encoded commands and decoded them with CyberChef. </p>
+<img width="1593" height="156" alt="Screenshot 2026-06-22 120407" src="https://github.com/user-attachments/assets/91a03184-bbc5-4578-8d89-286588430587" />
+<img width="953" height="127" alt="Screenshot 2026-06-22 120255" src="https://github.com/user-attachments/assets/385fa945-73d5-4dd8-88ed-fb14d2e24da2" />
+<p> Invoke-PowerDump.ps1 was first downloaded from the attacker and executed. </p>
+<img width="955" height="146" alt="Screenshot 2026-06-22 120520" src="https://github.com/user-attachments/assets/d59c4929-5c51-4836-8593-bbfdf7ca4e42" />
+<p> The NTLM hashes were then dumped to a text file <strong>hashes.txt</strong> in the path "C:\ProgramData\hashes.txt". </p>
+<br>
+<p> <strong> 14. Knowing the hosts targeted during the attacker's reconnaissance phase, the security team can prioritize their remediation efforts on these specific hosts. What's the name of the text file containing the discovered hosts? </strong> </p>
+<img width="1252" height="113" alt="Screenshot 2026-06-22 121708" src="https://github.com/user-attachments/assets/27f8e641-3c64-4ee6-844c-44344f247bbc" />
+<p> In the script ichigo-lite.ps1, there was an interesting text file name <strong>extracted_hosts.txt</strong> was downloaded after downloading Invoke-PowerDump.ps1 and Invoke-SMBExec.ps1. Therefore, we can look at the contents of the file. </p>
+<img width="853" height="380" alt="Screenshot 2026-06-22 122007" src="https://github.com/user-attachments/assets/76cd99e2-a319-4207-8c2d-4184ece10e67" />
+<p> Since 87.96.21.81 was the compromised host, it was believed that the other IP addresses were the targeted hosts by attacker. </p>
+<br>
+<p> <strong> 15. After hash dumping, the attacker attempted to deploy ransomware on the compromised host, spreading it to the rest of the network through previous lateral movement activities using SMB. You’re provided with the ransomware sample for further analysis. By performing behavioral analysis, what’s the name of the ransom note file? </strong> </p>
+<img width="866" height="207" alt="Screenshot 2026-06-22 123618" src="https://github.com/user-attachments/assets/d6d7d973-ce41-4442-ae8e-bfba6d0600d6" />
+<p> We can scroll down the ichigo-lite.ps1 further and looked at the script after credential dumping, we discovered that an executale javaw.exe was then downloaded from the attacker which was the ransomware. </p>
+<img width="1540" height="478" alt="Screenshot 2026-06-22 123723" src="https://github.com/user-attachments/assets/2cf3c2ed-f928-41b8-bae3-54b57c0e3eb8" />
+<p> Instead of output the ransomware, we can open the pcap file in Networkminer and looked throught the files. </p>
+<img width="727" height="483" alt="Screenshot 2026-06-22 124010" src="https://github.com/user-attachments/assets/f1714531-8cbe-4ea1-bcca-142c8e004afd" />
+<p> Then we copied the MD5 hash of javaw.exe for static analysis in VirusTotal. </p>
+<img width="911" height="42" alt="Screenshot 2026-06-22 124239" src="https://github.com/user-attachments/assets/888c9f85-4ef2-4640-a1a4-967245a28529" />
+<p> We can look at the dropped files of the ransomware in Relations section, the sole dropped text file was <strong># DECRYPT FILES BLUESKY #</strong>, believed that it was the ransom note. </p>
+<p> <strong> 16. In some cases, decryption tools are available for specific ransomware families. Identifying the family name can lead to a potential decryption solution. What's the name of this ransomware family? </strong></p>
+<p> Lets go back to the Detection section in VirusTotal. </p>
+<img width="1808" height="588" alt="Screenshot 2026-06-22 125011" src="https://github.com/user-attachments/assets/b38a0f82-4694-4e1f-bff6-71b7822a49ff" />
+<p> The ransomware was from <strong>BlueSky</strong> family. </p>
+
+
