@@ -149,5 +149,12 @@
 <p> Lets go back to the Detection section in VirusTotal. </p>
 <img width="1808" height="588" alt="Screenshot 2026-06-22 125011" src="https://github.com/user-attachments/assets/b38a0f82-4694-4e1f-bff6-71b7822a49ff" />
 <p> The ransomware was from <strong>BlueSky</strong> family. </p>
+<img width="1363" height="877" alt="Screenshot 2026-06-22 130043" src="https://github.com/user-attachments/assets/fc89fd53-b2ed-4946-be11-c66504234f17" />
+<p> The brief introduction of BlueSky ransomare from <a href="https://unit42.paloaltonetworks.com/bluesky-ransomware/"> Unit 42</a>. </p>
+<p align="right">(<a href="#top">Back to Top</a>)</p>
 
 
+<h2 id="reference"> Reference </h2>
+<p> <a href="https://cyberdefenders.org/blueteam-ctf-challenges/achievements/abc1230940/bluesky-ransomware/"> CyberDefenders - Bluesky Ransomware Lab </a> </p>
+<p> <a href="https://en.wikipedia.org/wiki/Tabular_Data_Stream"> Wikipedia </a> </p>
+<p> <a href="https://unit42.paloaltonetworks.com/bluesky-ransomware/"> BlueSky Ransomware: Fast Encryption via Multithreading </a> </p>
