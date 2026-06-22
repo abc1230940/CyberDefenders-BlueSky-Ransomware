@@ -158,3 +158,4 @@
 <p> <a href="https://cyberdefenders.org/blueteam-ctf-challenges/achievements/abc1230940/bluesky-ransomware/"> CyberDefenders - Bluesky Ransomware Lab </a> </p>
 <p> <a href="https://en.wikipedia.org/wiki/Tabular_Data_Stream"> Wikipedia </a> </p>
 <p> <a href="https://unit42.paloaltonetworks.com/bluesky-ransomware/"> BlueSky Ransomware: Fast Encryption via Multithreading </a> </p>
+<p align="right">(<a href="#top">Back to Top</a>)</p>
