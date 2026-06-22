@@ -134,7 +134,7 @@
 <img width="1252" height="113" alt="Screenshot 2026-06-22 121708" src="https://github.com/user-attachments/assets/27f8e641-3c64-4ee6-844c-44344f247bbc" />
 <p> In the script ichigo-lite.ps1, there was an interesting text file name <strong>extracted_hosts.txt</strong> was downloaded after downloading Invoke-PowerDump.ps1 and Invoke-SMBExec.ps1. Therefore, we can look at the contents of the file. </p>
 <img width="853" height="380" alt="Screenshot 2026-06-22 122007" src="https://github.com/user-attachments/assets/76cd99e2-a319-4207-8c2d-4184ece10e67" />
-<p> Since 87.96.21.81 was the compromised host, it was believed that the other IP addresses were the targeted hosts by the attacker. </p>
+<p> Since 87.96.21.81 was the compromised host, it was believed that the other IP addresses were the hosts targeted by the attacker. </p>
 <br>
 <p> <strong> 15. After hash dumping, the attacker attempted to deploy ransomware on the compromised host, spreading it to the rest of the network through previous lateral movement activities using SMB. You’re provided with the ransomware sample for further analysis. By performing behavioral analysis, what’s the name of the ransom note file? </strong> </p>
 <img width="866" height="207" alt="Screenshot 2026-06-22 123618" src="https://github.com/user-attachments/assets/d6d7d973-ce41-4442-ae8e-bfba6d0600d6" />
