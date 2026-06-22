@@ -76,7 +76,7 @@
 <p> The command allowed the attacker to enter command in the MSSQL database! </p>
 <br>
 <p> <strong> 5. Process injection is often used by attackers to escalate privileges within a system. What process did the attacker inject the C2 into to gain administrative privileges? </strong></p>
-<p> The attacker needed to move from the MSSQL database service to the host operating system by injecting malcious code into a process running as a high-privileged user. Because i did not know how to find powershell execution in a pcap file, I found the related events using event viewer by filtering <strong>Event ID: 600</strong>, finding if there was any process injection to spawn the powershell. </p>
+<p> The attacker needed to move from the MSSQL database service to the host operating system by injecting malicious code into a process running as a high-privileged user. Because i did not know how to find powershell execution in a pcap file, I found the related events using event viewer by filtering <strong>Event ID: 600</strong>, finding if there was any process injection to spawn the powershell. </p>
 <img width="647" height="708" alt="Screenshot 2026-06-21 184255" src="https://github.com/user-attachments/assets/a629667b-9eb7-4430-9253-160f94615e3f" />
 <p>As the detail shown, the attacker utilized MSFConsole, which was a component of Metasploit framework, injecting codes into the process <strong>winlogon.exe</strong> to spawn a malicious powershell process.</p>
 <p> <strong>winlogon.exe</strong> is a windows bulit-in process handling users logins, logouts, screensaver running as NT AUTHORITY\SYSTEM. </p>
@@ -100,7 +100,7 @@
 <p> <strong> 9. Can you determine the URL of the second file downloaded by the attacker? </strong></p>
 <p> We can look back the HTTP packets in Wireshark. </p>
 <img width="1275" height="837" alt="Screenshot 2026-06-21 191434" src="https://github.com/user-attachments/assets/3d61ad97-b59a-4ba3-8760-fd3708473c70" />
-<p> The second payload downloaded form the attacker was <strong>del.ps1</strong>. </p>
+<p> The second payload downloaded from the attacker was <strong>del.ps1</strong>. </p>
 <br>
 <p> <strong> 10. Identifying malicious tasks and understanding how they were used for persistence helps in fortifying defenses against future attacks. What's the full name of the task created by the attacker to maintain persistence? </strong> </p>
 <p> We scrolled down checking.ps1 further and looked at the script about scheduled task. </p>
