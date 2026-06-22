@@ -123,7 +123,7 @@
 <p> And yes! We found this script was about dumping credential. The windows users' NTLM hashes were encrypted and dumped with powershell. Therefore, <strong>Invoke-PowerDump.ps1</strong> was used b the attacker to dump credentials. </p>
 <br>
 <p> <strong> 13. Understanding which credentials have been compromised is essential for assessing the extent of the data breach. What's the name of the saved text file containing the dumped credentials? </strong></p>
-<p> When we scrolled down the script ichigo-lite.ps1 further, we discovered there were 2 encoded commands and decoded them with CyberChef. </p>
+<p> When we scrolled down the script ichigo-lite.ps1 further, we discovered there were 2 Base64 encoded commands and decoded them with CyberChef. </p>
 <img width="1593" height="156" alt="Screenshot 2026-06-22 120407" src="https://github.com/user-attachments/assets/91a03184-bbc5-4578-8d89-286588430587" />
 <img width="953" height="127" alt="Screenshot 2026-06-22 120255" src="https://github.com/user-attachments/assets/385fa945-73d5-4dd8-88ed-fb14d2e24da2" />
 <p> Invoke-PowerDump.ps1 was first downloaded from the attacker and executed. </p>
